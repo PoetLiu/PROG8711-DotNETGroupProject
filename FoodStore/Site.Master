@@ -1,0 +1,64 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.Master.cs" Inherits="FoodStore.MasterPage" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title>Food Store</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="Content/site.css" rel="stylesheet" />
+    <script src="Scripts/jquery-3.7.1.min.js"></script>
+    <script src="Scripts/bootstrap.min.js"></script>
+    <asp:ContentPlaceHolder ID="headPlaceholder" runat="server"></asp:ContentPlaceHolder>
+</head>
+<body>
+      <nav class="navbar bg-primary  navbar-expand-lg" data-bs-theme="dark">
+      <div class="container-fluid">
+           <a class="navbar-brand fst-italic" href="Default">FoodStore</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0 mx-auto">
+                  <li class="nav-item">
+                      <a class="nav-link" href="Default">Home</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="Products">Foods</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="Cart">Cart</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="Login">Login</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="Admin">Admin</a>
+                  </li>
+              </ul>
+          </div>
+      </div>
+  </nav>
+
+  <div class="container">
+      <form id="form1" runat="server">
+          <div>
+              <h1 class="p-2">
+                  <asp:Label ID="lblHeading" runat="server"></asp:Label></h1>
+              <asp:ContentPlaceHolder ID="contentPlaceHolder" runat="server">
+              </asp:ContentPlaceHolder>
+          </div>
+
+          <div class="container">
+              <asp:ContentPlaceHolder ID="footerPlaceHolder" runat="server">
+                  <footer class="d-flex flex-wrap justify-content-center align-items-center py-3 my-4 border-top">
+                      <span class="col-12 mb-md-0 text-muted text-center">© 2024 Group Project 1 (Shailendra Kumar Karki, Peng Liu, Swapnil Manishkumar Patel, Xingda Zhou). <br />
+                      All rights reserved.</span>
+                  </footer>
+              </asp:ContentPlaceHolder>
+          </div>
+      </form>
+  </div>
+</body>
+</html>
