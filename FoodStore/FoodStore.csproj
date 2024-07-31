@@ -70,6 +70,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\FoodStore.mdf" />
+    <Content Include="App_Data\FoodStore_log.ldf">
+      <DependentUpon>FoodStore.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -86,8 +90,22 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
-    <Content Include="Default.aspx" />
+    <Content Include="Content\site.css" />
+    <Content Include="Home.aspx" />
+    <Content Include="Foods.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Images\Foods\dessert-10.jpg" />
+    <Content Include="Images\Foods\dessert-9.jpg" />
+    <Content Include="Images\Foods\drink-11.jpg" />
+    <Content Include="Images\Foods\drink-12.jpg" />
+    <Content Include="Images\Foods\pizza-1.jpg" />
+    <Content Include="Images\Foods\pizza-2.jpg" />
+    <Content Include="Images\Foods\pizza-3.jpg" />
+    <Content Include="Images\Foods\pizza-4.jpg" />
+    <Content Include="Images\Foods\side-5.jpg" />
+    <Content Include="Images\Foods\side-6.jpg" />
+    <Content Include="Images\Foods\side-7.jpg" />
+    <Content Include="Images\Foods\side-8.jpg" />
     <Content Include="Images\home.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -127,16 +145,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
+    <Compile Include="Home.aspx.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
+    <Compile Include="Home.aspx.designer.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Foods.aspx.cs">
+      <DependentUpon>Foods.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Foods.aspx.designer.cs">
+      <DependentUpon>Foods.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Model\Food.cs" />
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -158,9 +184,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
