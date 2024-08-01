@@ -141,42 +141,6 @@ namespace FoodStore
         protected global::System.Web.UI.WebControls.TextBox tbImageUrl;
 
         /// <summary>
-        /// lblIsOnSale control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblIsOnSale;
-
-        /// <summary>
-        /// cbIsOnSale control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox cbIsOnSale;
-
-        /// <summary>
-        /// lblSalePrice control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSalePrice;
-
-        /// <summary>
-        /// tbSalePrice control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbSalePrice;
-
-        /// <summary>
         /// btnAddFood control.
         /// </summary>
         /// <remarks>

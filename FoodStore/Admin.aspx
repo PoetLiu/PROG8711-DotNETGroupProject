@@ -33,14 +33,6 @@
                     <asp:Label ID="lblImageUrl" runat="server" Text="Image URL" CssClass="form-label"></asp:Label>
                     <asp:TextBox ID="tbImageUrl" runat="server" CssClass="form-control"></asp:TextBox>
                 </div>
-                <div class="form-group">
-                    <asp:Label ID="lblIsOnSale" runat="server" Text="On Sale" CssClass="form-label"></asp:Label>
-                    <asp:CheckBox ID="cbIsOnSale" runat="server" CssClass="form-check-input" />
-                </div>
-                <div class="form-group">
-                    <asp:Label ID="lblSalePrice" runat="server" Text="Sale Price" CssClass="form-label"></asp:Label>
-                    <asp:TextBox ID="tbSalePrice" runat="server" CssClass="form-control"></asp:TextBox>
-                </div>
                 <asp:Button ID="btnAddFood" runat="server" Text="Add Food" CssClass="btn btn-primary" OnClick="btnAddFood_Click" />
             </div>
             <div class="col-md-6">
@@ -54,9 +46,7 @@
                         <asp:BoundField DataField="Price" HeaderText="Price" SortExpression="Price" />
                         <asp:BoundField DataField="Stock" HeaderText="Stock" SortExpression="Stock" />
                         <asp:BoundField DataField="ImageUrl" HeaderText="Image URL" SortExpression="ImageUrl" />
-                        <asp:BoundField DataField="IsOnSale" HeaderText="On Sale" SortExpression="IsOnSale" />
-                        <asp:BoundField DataField="SalePrice" HeaderText="Sale Price" SortExpression="SalePrice" />
-                        <asp:TemplateField>
+                                              <asp:TemplateField>
                             <ItemTemplate>
                                 <asp:Button ID="btnEdit" runat="server" Text="Edit" CommandName="Edit" CssClass="btn btn-warning btn-sm" />
                                 <asp:Button ID="btnDelete" runat="server" Text="Delete" CommandName="Delete" CssClass="btn btn-danger btn-sm" />
@@ -64,7 +54,7 @@
                         </asp:TemplateField>
                     </Columns>
                 </asp:GridView>
-                <asp:SqlDataSource ID="SqlDataSourceFoods" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT Foods.Id, Foods.Name, Foods.Description, Categories.Name AS Category, Foods.Price, Foods.Stock, Foods.ImageUrl, Foods.IsOnSale, Foods.SalePrice FROM Foods INNER JOIN Categories ON Foods.CategoryId = Categories.Id" DeleteCommand="DELETE FROM Foods WHERE Id = @Id">
+                <asp:SqlDataSource ID="SqlDataSourceFoods" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT Foods.Id, Foods.Name, Foods.Description, Categories.Name AS Category, Foods.Price, Foods.Stock, Foods.ImageUrl FROM Foods INNER JOIN Categories ON Foods.CategoryId = Categories.Id" DeleteCommand="DELETE FROM Foods WHERE Id = @Id">
                     <DeleteParameters>
                         <asp:Parameter Name="Id" Type="Int32" />
                     </DeleteParameters>

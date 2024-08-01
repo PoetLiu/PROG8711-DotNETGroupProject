@@ -17,14 +17,12 @@ namespace FoodStore
             decimal price = decimal.Parse(tbPrice.Text);
             int stock = int.Parse(tbStock.Text);
             string imageUrl = tbImageUrl.Text;
-            bool isOnSale = cbIsOnSale.Checked;
-            decimal? salePrice = isOnSale ? (decimal?)decimal.Parse(tbSalePrice.Text) : null;
-
+    
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "INSERT INTO Foods (Name, Description, CategoryId, Price, Stock, ImageUrl, IsOnSale, SalePrice) VALUES (@Name, @Description, @CategoryId, @Price, @Stock, @ImageUrl, @IsOnSale, @SalePrice)";
+                string query = "INSERT INTO Foods (Name, Description, CategoryId, Price, Stock, ImageUrl) VALUES (@Name, @Description, @CategoryId, @Price, @Stock, @ImageUrl)";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -34,9 +32,6 @@ namespace FoodStore
                     command.Parameters.AddWithValue("@Price", price);
                     command.Parameters.AddWithValue("@Stock", stock);
                     command.Parameters.AddWithValue("@ImageUrl", imageUrl);
-                    command.Parameters.AddWithValue("@IsOnSale", isOnSale);
-                    command.Parameters.AddWithValue("@SalePrice", salePrice.HasValue ? (object)salePrice.Value : DBNull.Value);
-
                     connection.Open();
                     command.ExecuteNonQuery();
                     connection.Close();
@@ -62,14 +57,12 @@ namespace FoodStore
             decimal price = (decimal)e.NewValues["Price"];
             int stock = (int)e.NewValues["Stock"];
             string imageUrl = (string)e.NewValues["ImageUrl"];
-            bool isOnSale = (bool)e.NewValues["IsOnSale"];
-            decimal? salePrice = isOnSale ? (decimal?)e.NewValues["SalePrice"] : null;
 
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "UPDATE Foods SET Name = @Name, Description = @Description, CategoryId = (SELECT Id FROM Categories WHERE Name = @Category), Price = @Price, Stock = @Stock, ImageUrl = @ImageUrl, IsOnSale = @IsOnSale, SalePrice = @SalePrice WHERE Id = @Id";
+                string query = "UPDATE Foods SET Name = @Name, Description = @Description, CategoryId = (SELECT Id FROM Categories WHERE Name = @Category), Price = @Price, Stock = @Stock, ImageUrl = @ImageUrl WHERE Id = @Id";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -80,8 +73,7 @@ namespace FoodStore
                     command.Parameters.AddWithValue("@Price", price);
                     command.Parameters.AddWithValue("@Stock", stock);
                     command.Parameters.AddWithValue("@ImageUrl", imageUrl);
-                    command.Parameters.AddWithValue("@IsOnSale", isOnSale);
-                    command.Parameters.AddWithValue("@SalePrice", salePrice.HasValue ? (object)salePrice.Value : DBNull.Value);
+                    
 
                     connection.Open();
                     command.ExecuteNonQuery();
