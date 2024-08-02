@@ -3,20 +3,37 @@
 
 <asp:Content ID="mainContent" ContentPlaceHolderID="contentPlaceHolder" runat="server">
       <div runat="server" class="row justify-content-md-center">
-        <table class="col-10 col-lg-8 ">
+        <table class="col-10 col-lg-8">
             <tr>
-                <td class="auto-style2 fw-bold">
-                    <asp:Label ID="lblFoods" class="form-label" runat="server" Text="Please Select a Food"></asp:Label>
+                <td>
+                    <div class="row">
+                        <asp:Label ID="Label1" class="form-label col-3 fw-bold" runat="server" Text="Category"></asp:Label>
+                        <div class="col-8">
+                            <asp:DropDownList class="form-control form-select" ID="ddlCategories" runat="server" AutoPostBack="True" DataSourceID="SqlDataSource1" DataTextField="Name" DataValueField="Id" OnSelectedIndexChanged="ddlCategories_SelectedIndexChanged">
+                            </asp:DropDownList>
+                        </div>
+                        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM Categories" ProviderName="<%$ ConnectionStrings:ConnectionString.ProviderName %>"></asp:SqlDataSource>
+                    </div>
                 </td>
                 <td>
-                    <asp:DropDownList class="form-control form-select" ID="ddlFoods" runat="server" AutoPostBack="True" DataSourceID="SqlDataSource1" DataTextField="Name" DataValueField="Id">
-                    </asp:DropDownList>
-                    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT Foods.Id, Foods.Name, Foods.Description, Foods.Stock, Foods.Price, Categories.Name AS Category, Foods.ImageUrl, Foods.CreatedAt FROM Foods INNER JOIN Categories ON Foods.CategoryId = Categories.Id" ProviderName="<%$ ConnectionStrings:ConnectionString.ProviderName %>"></asp:SqlDataSource>
+                    <div class="row">
+                        <asp:Label ID="lblFoods" class="form-label col-3 fw-bold" runat="server" Text="Food"></asp:Label>
+                        <div class="col-8">
+                            <asp:DropDownList class="form-control form-select" ID="ddlFoods" runat="server" AutoPostBack="True" DataSourceID="SqlDataSource2" DataTextField="Name" DataValueField="Id" OnSelectedIndexChanged="ddlFoods_SelectedIndexChanged">
+                            </asp:DropDownList>
+                            <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
+                                SelectCommand="SELECT Foods.Id, Foods.Name, Foods.Description, Foods.Stock, Foods.Price, Categories.Name AS Category, Foods.ImageUrl, Foods.CreatedAt FROM Foods INNER JOIN Categories ON Foods.CategoryId = Categories.Id WHERE (Foods.CategoryId = @CategoryId)">
+                                <SelectParameters>
+                                    <asp:ControlParameter ControlID="ddlCategories" Name="CategoryId" PropertyName="SelectedValue" />
+                                </SelectParameters>
+                            </asp:SqlDataSource>
+                        </div>
+                    </div>
                 </td>
             </tr>
             <tr>
                 <td rowspan="6">
-                    <asp:Image ID="imgFood" runat="server" CssClass="col-11" />
+                    <asp:Image ID="imgFood" runat="server" CssClass="col-11 rounded shadow" />
                 </td>
                 <td class="auto-style2">
                     <asp:Label ID="lblName" class="form-label h3" runat="server" Text="Name"></asp:Label>

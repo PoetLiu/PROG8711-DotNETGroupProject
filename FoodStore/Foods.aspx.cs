@@ -14,9 +14,18 @@ namespace FoodStore
         private Food selectedFood;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack) ddlFoods.DataBind();
+            if (!IsPostBack)
+            {
+                Master.HeadingText = "Foods";
+                ddlCategories.DataBind();
+                ddlFoods.DataBind();
+                RenderSelectedFood();
+            }
 
-            Master.HeadingText = "Foods";
+        }
+
+        protected void RenderSelectedFood()
+        {
             selectedFood = GetFood(ddlFoods.SelectedValue);
             RenderFood(selectedFood);
         }
@@ -33,7 +42,7 @@ namespace FoodStore
 
         private Food GetFood(String Id)
         {
-            DataView foodsTable = (DataView)SqlDataSource1.Select(DataSourceSelectArguments.Empty);
+            DataView foodsTable = (DataView)SqlDataSource2.Select(DataSourceSelectArguments.Empty);
             foodsTable.RowFilter = "Id= " + Id + "";
             DataRowView row = foodsTable[0];
 
@@ -55,6 +64,17 @@ namespace FoodStore
             if (!Page.IsValid) return;
             // TODO add to cart
             Response.Redirect("~/Cart");
+        }
+
+        protected void ddlCategories_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ddlFoods.DataBind();
+            RenderSelectedFood();
+        }
+
+        protected void ddlFoods_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RenderSelectedFood();
         }
     }
 }
