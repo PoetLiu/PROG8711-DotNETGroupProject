@@ -46,6 +46,11 @@
                          Admin
                         </asp:HyperLink>
                     </li>
+                    <li class="nav-item" runat="server">
+                        <asp:HyperLink NavigateUrl="Register" runat="server" CssClass="nav-link">
+                         Register
+                        </asp:HyperLink>
+                    </li>
                 </ul>
             </div>
         </div>
