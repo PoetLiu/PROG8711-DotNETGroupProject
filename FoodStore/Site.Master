@@ -1,7 +1,6 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.Master.cs" Inherits="FoodStore.MasterPage" %>
 
 <!DOCTYPE html>
-
 <html>
 <head runat="server">
     <title>Food Store</title>
@@ -13,44 +12,15 @@
     <asp:ContentPlaceHolder ID="headPlaceholder" runat="server"></asp:ContentPlaceHolder>
 </head>
 <body>
-    <nav class="navbar bg-primary  navbar-expand-lg" data-bs-theme="dark">
+    <nav class="navbar bg-primary navbar-expand-lg" data-bs-theme="dark">
         <div class="container-fluid">
-            <a class="navbar-brand fst-italic" href="Default">FoodStore</a>
+            <a class="navbar-brand fst-italic" href="Default.aspx">FoodStore</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul id="navList" runat="server" class="navbar-nav me-auto mb-2 mb-lg-0 mx-auto">
-                    <li class="nav-item" runat="server">
-                        <asp:HyperLink NavigateUrl="Home" runat="server" CssClass="nav-link">
-                         Home
-                        </asp:HyperLink>
-                    </li>
-                    <li class="nav-item" runat="server">
-                        <asp:HyperLink NavigateUrl="Foods" runat="server" CssClass="nav-link">
-                            Foods
-                        </asp:HyperLink>
-                    </li>
-                    <li class="nav-item" runat="server">
-                        <asp:HyperLink NavigateUrl="Cart" runat="server" CssClass="nav-link">
-                        Cart 
-                        </asp:HyperLink>
-                    </li>
-                    <li class="nav-item" runat="server">
-                        <asp:HyperLink NavigateUrl="Login" runat="server" CssClass="nav-link">
-                        Login 
-                        </asp:HyperLink>
-                    </li>
-                    <li class="nav-item" runat="server">
-                        <asp:HyperLink NavigateUrl="Admin" runat="server" CssClass="nav-link">
-                         Admin
-                        </asp:HyperLink>
-                    </li>
-                    <li class="nav-item" runat="server">
-                        <asp:HyperLink NavigateUrl="Register" runat="server" CssClass="nav-link">
-                         Register
-                        </asp:HyperLink>
-                    </li>
+                    <!-- Navigation items will be added here dynamically -->
                 </ul>
             </div>
         </div>
@@ -79,3 +49,4 @@
     </div>
 </body>
 </html>
+

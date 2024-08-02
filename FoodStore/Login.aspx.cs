@@ -27,12 +27,13 @@ namespace FoodStore
             // Replace with your actual connection string
             string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\swapnil\\Source\\Repos\\PROG8711-DotNETGroupProject\\FoodStore\\App_Data\\FoodStore.mdf;Integrated Security=True";
             string storedPasswordHash = null;
+            int userType = -1; // Initialize to an invalid value
 
             // Check the email and password
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
-                string query = "SELECT PasswordHash FROM Users WHERE Email = @Email";
+                string query = "SELECT PasswordHash, Type FROM Users WHERE Email = @Email";
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
                     cmd.Parameters.AddWithValue("@Email", email);
@@ -42,6 +43,7 @@ namespace FoodStore
                         if (reader.Read())
                         {
                             storedPasswordHash = reader["PasswordHash"].ToString();
+                            userType = Convert.ToInt32(reader["Type"]);
                         }
                     }
                 }
@@ -50,19 +52,39 @@ namespace FoodStore
             // If the user exists and password is correct
             if (!string.IsNullOrEmpty(storedPasswordHash) && BCrypt.Net.BCrypt.Verify(password, storedPasswordHash))
             {
-                // Create a cookie with the email
+                // Create a cookie with the appropriate value
                 HttpCookie userCookie = new HttpCookie("UserInfo");
-                userCookie["Email"] = email;
+                if (userType == 1)
+                {
+                    userCookie["Type"] = "user";
+                }
+                else if (userType == 2)
+                {
+                    userCookie["Type"] = "admin";
+                }
                 userCookie.Expires = DateTime.Now.AddHours(1); // Set the cookie to expire in 1 hour
                 Response.Cookies.Add(userCookie);
 
-                // Redirect to Foods.aspx page
-                Response.Redirect("Foods.aspx");
+                // Redirect based on user type
+                if (userType == 1)
+                {
+                    Response.Redirect("Foods.aspx");
+                }
+                else if (userType == 2)
+                {
+                    Response.Redirect("Admin.aspx");
+                }
+                else
+                {
+                    lblMessage.Text = "Invalid user type.";
+                }
             }
             else
             {
                 lblMessage.Text = "Invalid email or password.";
             }
         }
+
+
     }
 }
