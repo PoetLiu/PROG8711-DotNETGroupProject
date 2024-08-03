@@ -20,7 +20,24 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul id="navList" runat="server" class="navbar-nav me-auto mb-2 mb-lg-0 mx-auto">
-                    <!-- Navigation items will be added here dynamically -->
+                    <li class="nav-item">
+                        <asp:HyperLink NavigateUrl="Home.aspx" runat="server" CssClass="nav-link">Home</asp:HyperLink>
+                    </li>
+                    <li class="nav-item">
+                        <asp:HyperLink NavigateUrl="Foods.aspx" runat="server" CssClass="nav-link">Foods</asp:HyperLink>
+                    </li>
+                    <li class="nav-item">
+                        <asp:HyperLink NavigateUrl="Cart.aspx" runat="server" CssClass="nav-link">Cart</asp:HyperLink>
+                    </li>
+                    <li class="nav-item">
+                        <asp:HyperLink NavigateUrl="Login.aspx" runat="server" CssClass="nav-link">Login</asp:HyperLink>
+                    </li>
+                    <li class="nav-item">
+                        <asp:HyperLink NavigateUrl="Admin.aspx" runat="server" CssClass="nav-link">Admin</asp:HyperLink>
+                    </li>
+                    <li class="nav-item">
+                        <asp:HyperLink NavigateUrl="Register.aspx" runat="server" CssClass="nav-link">Register</asp:HyperLink>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -39,9 +56,7 @@
             <div class="container">
                 <asp:ContentPlaceHolder ID="footerPlaceHolder" runat="server">
                     <footer class="d-flex flex-wrap justify-content-center align-items-center py-3 my-4 border-top">
-                        <span class="col-12 mb-md-0 text-muted text-center">© 2024 Group Project 1 (Shailendra Kumar Karki, Peng Liu, Swapnil Manishkumar Patel, Xingda Zhou).
-                            <br />
-                            All rights reserved.</span>
+                        <span class="col-12 mb-md-0 text-muted text-center">© 2024 Group Project 1 (Shailendra Kumar Karki, Peng Liu, Swapnil Manishkumar Patel, Xingda Zhou).<br />All rights reserved.</span>
                     </footer>
                 </asp:ContentPlaceHolder>
             </div>
@@ -49,4 +64,3 @@
     </div>
 </body>
 </html>
-
