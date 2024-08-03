@@ -25,16 +25,16 @@ namespace FoodStore
             }
 
             // Replace with your actual connection string
-            string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\swapnil\\Source\\Repos\\PROG8711-DotNETGroupProject\\FoodStore\\App_Data\\FoodStore.mdf;Integrated Security=True";
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString; 
             string storedPasswordHash = null;
             int userType = -1; // Initialize to an invalid value
 
             // Check the email and password
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                con.Open();
+                connection.Open();
                 string query = "SELECT PasswordHash, Type FROM Users WHERE Email = @Email";
-                using (SqlCommand cmd = new SqlCommand(query, con))
+                using (SqlCommand cmd = new SqlCommand(query, connection))
                 {
                     cmd.Parameters.AddWithValue("@Email", email);
 
