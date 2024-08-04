@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using FoodStore.Model;
 
 namespace FoodStore
 {
@@ -62,8 +63,25 @@ namespace FoodStore
         protected void btnAddToCart_Click(object sender, EventArgs e)
         {
             if (!Page.IsValid) return;
-            // TODO add to cart
-            Response.Redirect("~/Cart");
+
+            selectedFood = GetFood(ddlFoods.SelectedValue);
+
+            CartItemList cart = CartItemList.GetCart();
+
+
+            CartItem cartItem = cart[selectedFood.Id];
+            if (cartItem == null)
+            {
+                cart.AddItem(selectedFood, 1);
+            }
+            else
+            {
+                cartItem.AddQuantity(1);
+            }
+
+
+            Session["Cart"] = cart;
+            Response.Redirect("~/Cart.aspx");
         }
 
         protected void ddlCategories_SelectedIndexChanged(object sender, EventArgs e)
