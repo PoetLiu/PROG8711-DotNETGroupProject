@@ -13,14 +13,14 @@ namespace FoodStore
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            cart = CartItemList.GetCart(); 
+            cart = CartItemList.GetCart();
         }
 
         protected void btnPlaceOrder_Click(object sender, EventArgs e)
         {
             if (Page.IsValid)
             {
-                
+
                 string fullName = txtFullName.Text;
                 string address = txtAddress.Text;
                 string city = txtCity.Text;
@@ -29,7 +29,7 @@ namespace FoodStore
                 string phone = txtPhone.Text;
                 string notes = txtNotes.Text;
 
-               
+
                 HttpCookie userCookie = Request.Cookies["UserInfo"];
                 if (userCookie == null || string.IsNullOrEmpty(userCookie["Email"]))
                 {
@@ -39,7 +39,7 @@ namespace FoodStore
                 string email = userCookie["Email"];
                 int userId = GetUserIdFromDatabase(email);
 
-               
+
                 string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
 
                 using (SqlConnection conn = new SqlConnection(connectionString))
@@ -49,9 +49,9 @@ namespace FoodStore
 
                     try
                     {
-                       
+
                         string insertAddressQuery = @"
-                            INSERT INTO ShippingAddress (UserId, FullName, Phone, Address, City, Province, Postcode)
+                            INSERT INTO Shipping_Address (UserId, FullName, Phone, Address, City, Province, Postcode)
                             OUTPUT INSERTED.Id
                             VALUES (@UserId, @FullName, @Phone, @Address, @City, @Province, @Postcode)";
 
@@ -68,7 +68,7 @@ namespace FoodStore
                             shippingAddressId = (int)cmd.ExecuteScalar();
                         }
 
-                      
+
                         string insertOrderQuery = @"
                             INSERT INTO Orders (UserId, TotalAmount, CreatedAt, ShippingAddressId)
                             OUTPUT INSERTED.Id
@@ -106,19 +106,19 @@ namespace FoodStore
 
                         lblMessage.Text = "Thank you for your order!";
 
-                        
+
                         Response.Redirect("Foods.aspx");
                     }
                     catch (Exception ex)
                     {
                         transaction.Rollback();
-                        lblMessage.Text = "An error occurred while processing your order. Please try again.";
+                        lblMessage.Text = "An error occurred while processing your order. Please try again. Error: " + ex.Message;
                     }
                 }
             }
         }
 
-      
+
         private int GetUserIdFromDatabase(string email)
         {
             int userId = -1;

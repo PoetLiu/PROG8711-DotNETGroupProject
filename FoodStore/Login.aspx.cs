@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.SqlClient;
+using System.Web;
 using System.Web.UI;
 
 namespace FoodStore
@@ -8,7 +9,24 @@ namespace FoodStore
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Any page load logic can be added here
+            if (!IsPostBack && Session["UserEmail"] != null)
+            {
+                string email = Session["UserEmail"].ToString();
+                int userId = (int)Session["UserId"];
+                int userType = (int)Session["UserType"];
+
+                HttpCookie userCookie = new HttpCookie("UserInfo");
+                userCookie["UserId"] = userId.ToString();
+                userCookie["Email"] = email;
+                userCookie["Type"] = userType.ToString();
+                userCookie.Expires = DateTime.Now.AddHours(1); // Set cookie expiration to 1 hour
+                Response.Cookies.Add(userCookie);
+
+                // Clear session after setting cookie to prevent redundant operations
+                Session.Remove("UserEmail");
+                Session.Remove("UserId");
+                Session.Remove("UserType");
+            }
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)
