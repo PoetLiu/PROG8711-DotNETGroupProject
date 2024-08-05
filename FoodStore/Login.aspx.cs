@@ -40,7 +40,7 @@ namespace FoodStore
 
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    string query = "SELECT PasswordHash FROM Users WHERE Email = @Email";
+                    string query = "SELECT Id, Type, PasswordHash FROM Users WHERE Email = @Email";
 
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
@@ -49,17 +49,41 @@ namespace FoodStore
                         try
                         {
                             conn.Open();
-                            object result = cmd.ExecuteScalar();
-
-                            if (result != null)
+                            using (SqlDataReader reader = cmd.ExecuteReader())
                             {
-                                string storedPasswordHash = result.ToString();
-                                if (VerifyPassword(password, storedPasswordHash))
+                                if (reader.Read())
                                 {
-                                    lblMessage.Text = "Login successful!";
-                                    lblMessage.ForeColor = System.Drawing.Color.Green;
-                                    // Redirect to a different page after successful login
-                                    Response.Redirect("~/Home.aspx");
+                                    int userId = (int)reader["Id"];
+                                    int userType = (int)reader["Type"];
+                                    string storedPasswordHash = reader["PasswordHash"].ToString();
+
+                                    if (VerifyPassword(password, storedPasswordHash))
+                                    {
+                                        // Set session variables
+                                        Session["UserId"] = userId;
+                                        Session["UserType"] = userType;
+                                        Session["IsLoggedIn"] = true;
+
+                                        lblMessage.Text = "Login successful!";
+                                        lblMessage.ForeColor = System.Drawing.Color.Green;
+
+                                        // Redirect based on user type
+                                        if (userType == 2)
+                                        {
+                                            // Redirect to admin dashboard or specific admin page
+                                            Response.Redirect("~/Admin.aspx");
+                                        }
+                                        else
+                                        {
+                                            // Redirect to home or user-specific page
+                                            Response.Redirect("~/Home.aspx");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        lblMessage.Text = "Invalid email or password.";
+                                        lblMessage.ForeColor = System.Drawing.Color.Red;
+                                    }
                                 }
                                 else
                                 {
@@ -67,16 +91,13 @@ namespace FoodStore
                                     lblMessage.ForeColor = System.Drawing.Color.Red;
                                 }
                             }
-                            else
-                            {
-                                lblMessage.Text = "Invalid email or password.";
-                                lblMessage.ForeColor = System.Drawing.Color.Red;
-                            }
                         }
                         catch (Exception ex)
                         {
-                            lblMessage.Text = "Error: " + ex.Message;
+                            lblMessage.Text = "Error: An unexpected error occurred.";
                             lblMessage.ForeColor = System.Drawing.Color.Red;
+                            // Log the exception (e.g., using a logging framework)
+                            System.Diagnostics.Debug.WriteLine(ex.ToString());
                         }
                     }
                 }
@@ -93,11 +114,10 @@ namespace FoodStore
             return !string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password);
         }
 
-        private bool VerifyPassword(string password, string storedPasswordHash)
+        private bool VerifyPassword(string enteredPassword, string storedPasswordHash)
         {
-            // Implement your password verification logic here
-            // For example, using a library like BCrypt.Net or SHA256
-            return password == storedPasswordHash; // Placeholder, replace with actual verification implementation
+            // Direct comparison for plain text passwords (for testing purposes)
+            return enteredPassword == storedPasswordHash;
         }
     }
 }
