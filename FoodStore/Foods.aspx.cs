@@ -76,7 +76,7 @@ namespace FoodStore
             }
             else
             {
-                cartItem.AddQuantity(1);
+                cartItem.AddQuantity(quanity);
             }
 
 
