@@ -63,6 +63,14 @@ namespace FoodStore
                                         Session["UserId"] = userId;
                                         Session["UserType"] = userType;
                                         Session["IsLoggedIn"] = true;
+                                        Session["UserEmail"] = email;
+
+                                        HttpCookie userCookie = new HttpCookie("UserInfo");
+                                        userCookie["UserId"] = userId.ToString();
+                                        userCookie["Email"] = email;
+                                        userCookie["Type"] = userType.ToString();
+                                        userCookie.Expires = DateTime.Now.AddHours(1); // Set cookie expiration to 1 hour
+                                        Response.Cookies.Add(userCookie);
 
                                         lblMessage.Text = "Login successful!";
                                         lblMessage.ForeColor = System.Drawing.Color.Green;

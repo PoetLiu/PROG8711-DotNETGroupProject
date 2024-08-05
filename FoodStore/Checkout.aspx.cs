@@ -13,8 +13,14 @@ namespace FoodStore
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["UserEmail"] == null || Request.Cookies["UserInfo"] == null)
+            {
+                Response.Redirect("~/Login.aspx");
+                return;
+            }
             cart = CartItemList.GetCart();
         }
+
 
         protected void btnPlaceOrder_Click(object sender, EventArgs e)
         {
