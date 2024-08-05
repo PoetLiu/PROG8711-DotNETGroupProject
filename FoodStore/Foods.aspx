@@ -67,7 +67,7 @@
                     <asp:Label ID="lblQuantity" class="form-label fw-bold" runat="server" Text="Quantity"></asp:Label><br />
                     <asp:TextBox ID="tbQuantity" class="form-control" runat="server"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="tbQuantity" CssClass="text-danger" ErrorMessage="Quantity is required."></asp:RequiredFieldValidator><br />
-                    <asp:RangeValidator ID="RangeValidator1" runat="server" ControlToValidate="tbQuantity" CssClass="text-danger" ErrorMessage="Quantity must range from 1 to 20." MaximumValue="20" MinimumValue="1" Type="Integer"></asp:RangeValidator>
+                    <asp:RangeValidator ID="RangeValidator1" runat="server" ControlToValidate="tbQuantity" CssClass="text-danger" ErrorMessage="Quantity must range from 1 to 10." MaximumValue="10" MinimumValue="1" Type="Integer"></asp:RangeValidator>
                 </td>
             </tr>
             <tr>

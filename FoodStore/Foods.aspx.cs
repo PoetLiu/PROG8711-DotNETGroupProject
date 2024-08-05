@@ -68,11 +68,11 @@ namespace FoodStore
 
             CartItemList cart = CartItemList.GetCart();
 
-
+            int quanity = Int32.Parse(tbQuantity.Text);
             CartItem cartItem = cart[selectedFood.Id];
             if (cartItem == null)
             {
-                cart.AddItem(selectedFood, 1);
+                cart.AddItem(selectedFood, quanity);
             }
             else
             {
