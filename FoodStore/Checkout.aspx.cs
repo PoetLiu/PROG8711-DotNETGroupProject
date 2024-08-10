@@ -1,9 +1,9 @@
-﻿using System;
+﻿using FoodStore.Model;
+using System;
 using System.Data.SqlClient;
-using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
-using FoodStore.Model;
 
 namespace FoodStore
 {
@@ -21,12 +21,10 @@ namespace FoodStore
             cart = CartItemList.GetCart();
         }
 
-
         protected void btnPlaceOrder_Click(object sender, EventArgs e)
         {
             if (Page.IsValid)
             {
-
                 string fullName = txtFullName.Text;
                 string address = txtAddress.Text;
                 string city = txtCity.Text;
@@ -35,6 +33,12 @@ namespace FoodStore
                 string phone = txtPhone.Text;
                 string notes = txtNotes.Text;
 
+                // Validate the Canadian address format
+                if (!ValidateCanadianAddress(address, city, province, postcode))
+                {
+                    lblMessage.Text = "Please enter a valid Canadian address, including street name and number.";
+                    return;
+                }
 
                 HttpCookie userCookie = Request.Cookies["UserInfo"];
                 if (userCookie == null || string.IsNullOrEmpty(userCookie["Email"]))
@@ -45,7 +49,6 @@ namespace FoodStore
                 string email = userCookie["Email"];
                 int userId = GetUserIdFromDatabase(email);
 
-
                 string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
 
                 using (SqlConnection conn = new SqlConnection(connectionString))
@@ -55,7 +58,6 @@ namespace FoodStore
 
                     try
                     {
-
                         string insertAddressQuery = @"
                             INSERT INTO Shipping_Address (UserId, FullName, Phone, Address, City, Province, Postcode)
                             OUTPUT INSERTED.Id
@@ -73,7 +75,6 @@ namespace FoodStore
                             cmd.Parameters.AddWithValue("@Postcode", postcode);
                             shippingAddressId = (int)cmd.ExecuteScalar();
                         }
-
 
                         string insertOrderQuery = @"
                             INSERT INTO Orders (UserId, TotalAmount, CreatedAt, ShippingAddressId)
@@ -112,7 +113,6 @@ namespace FoodStore
 
                         lblMessage.Text = "Thank you for your order!";
 
-
                         Response.Redirect("Foods.aspx");
                     }
                     catch (Exception ex)
@@ -124,6 +124,28 @@ namespace FoodStore
             }
         }
 
+        private bool ValidateCanadianAddress(string address, string city, string province, string postcode)
+        {
+            // Canadian postal code pattern (A1A 1A1)
+            string postalCodePattern = @"^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$";
+
+            // Street address pattern: number followed by one or more words (e.g., "123 Main St")
+            string streetAddressPattern = @"^\d+\s+[\w\s]+$";
+
+            // City and Province pattern: only letters (e.g., "Toronto", "Ontario")
+            string cityProvincePattern = @"^[a-zA-Z\s]+$";
+
+            // Basic validation
+            if (string.IsNullOrEmpty(address) || !Regex.IsMatch(address, streetAddressPattern) ||
+                string.IsNullOrEmpty(city) || !Regex.IsMatch(city, cityProvincePattern) ||
+                string.IsNullOrEmpty(province) || !Regex.IsMatch(province, cityProvincePattern) ||
+                !Regex.IsMatch(postcode, postalCodePattern))
+            {
+                return false;
+            }
+
+            return true;
+        }
 
         private int GetUserIdFromDatabase(string email)
         {
